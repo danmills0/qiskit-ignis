@@ -198,6 +198,8 @@ class QVFitter:
                 for result in self._result_list:
                     try:
                         count_list.append(result.get_counts(circ_name))
+                        # for i in count_list[-1]:
+                        #     count_list[-1][i.replace(" ","")] = count_list[-1].pop(i)
                     except (QiskitError, KeyError):
                         pass
 
@@ -212,6 +214,8 @@ class QVFitter:
                     self._subset_probability(
                         self._heavy_outputs[circ_name],
                         circ_counts[circ_name])
+
+                # print(circ_counts[circ_name])
 
     def calc_statistics(self):
         """
@@ -376,4 +380,11 @@ class QVFitter:
         of the probabilities of each string as given by the
         distribution.
         """
-        return sum([distribution.get(value, 0) for value in strings])
+        new_distribution = {}
+        # print(distribution)
+        # print("\n")
+        for i in distribution:
+            new_distribution[i.replace(" ","")] = distribution[i]
+        # print(new_distribution)
+        # print("\n")
+        return sum([new_distribution.get(value, 0) for value in strings])
